@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Everything you need to know   to create your own R 📦</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Earo Wang" />
+    <link href="index_files/remark-css/default.css" rel="stylesheet" />
+    <link href="index_files/remark-css/rladies.css" rel="stylesheet" />
+    <link href="index_files/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <link href="index_files/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Everything you need to know <br> to create your own R 📦
+### Earo Wang
+### May 27, 2018 <br> slides at <a href="http://slides.earo.me/rladies-pkg" class="uri">http://slides.earo.me/rladies-pkg</a>
+
+---
+
+
+
+
+## Step 0: catchy package name
+
+`available::available()` to make sure that the package name is unique and valid. 🤞
+
+
+```r
+available::available("zomato", browse = FALSE)
+```
+
+```
+#&gt; ── zomato ─────────────────────────────────────────────────────────────
+#&gt; Name valid: ✔
+#&gt; Available on CRAN: ✔ 
+#&gt; Available on Bioconductor: ✔
+#&gt; Available on GitHub:  ✔ 
+#&gt; Bad Words: ✔
+#&gt; Abbreviations: http://www.abbreviations.com/zomato
+#&gt; Wikipedia: https://en.wikipedia.org/wiki/zomato
+#&gt; Wiktionary: https://en.wiktionary.org/wiki/zomato
+#&gt; Urban Dictionary:
+#&gt;   Not found.
+#&gt; Sentiment:???
+```
+
+---
+
+## Step 1: package skeleton
+
+`usethis::create_package()` to initialise the basics of the package
+
+```r
+usethis::create_package("~/Rpkg/zomato")
+```
+
+```
+#&gt; Changing active project to zomato
+#&gt; ✔ Creating 'R/'
+#&gt; ✔ Creating 'man/'
+#&gt; ✔ Writing 'DESCRIPTION'
+#&gt; ✔ Writing 'NAMESPACE'
+#&gt; ✔ Writing 'zomato.Rproj'
+#&gt; ✔ Adding '.Rproj.user' to './.gitignore'
+#&gt; ✔ Adding '^zomato\\.Rproj$', '^\\.Rproj\\.user$' to '.Rbuildignore'
+#&gt; ✔ Opening project in RStudio
+```
+
+---
+
+![](img/zomato.png)
+
+---
+
+## Step 2: edit `DESCRIPTION`
+
+```
+Package: zomato
+Version: 0.0.0.9000
+Title: What the Package Does (One Line, Title Case)
+Description: What the package does (one paragraph).
+Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+```
+
+---
+
+## Step 3: write R functions
+
+```r
+usethis::use_r(name = "api")
+```
+
+```r
+● Modify 'api.R'
+```
+
+---
+
+## Step 4: use functions from other packages
+
+```r
+usethis::use_package("httr")
+```
+
+```
+#&gt; ✔ Adding 'httr' to Imports field in DESCRIPTION
+#&gt; ● Refer to functions with `httr::fun()`
+```
+
+---
+
+## Step 5: document your functions
+
+* Shortcut `command` + `option` + `shift` + `R` to insert roxygen skeleton
+
+* Shortcut `command` + `shift` + `D` to generate man file (`*.Rd`)
+
+---
+
+## Step 6: unit tests
+
+```r
+usethis::use_test("api")
+```
+
+```
+#&gt; ✔ Adding 'testthat' to Suggests field in DESCRIPTION
+#&gt; ✔ Creating 'tests/testthat/'
+#&gt; ✔ Writing 'tests/testthat.R'
+#&gt; ✔ Writing 'tests/testthat/test-api.R'
+#&gt; ● Modify 'test-api.R'
+```
+
+---
+
+## Step 6: unit tests
+
+&lt;blockquote class="twitter-tweet" data-lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;Sometime I self-soothe by writing unit tests.&lt;br&gt;This is how the world should be and … it is.&lt;br&gt;This is how the world should be and … it is.&lt;br&gt;This is how … WTF!?! OK, fixed.&lt;br&gt;This is how the world should be and … it is.&lt;/p&gt;&amp;mdash; Jenny Bryan (@JennyBryan) &lt;a href="https://twitter.com/JennyBryan/status/983096934209482752?ref_src=twsrc%5Etfw"&gt;April 8, 2018&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt; 
+
+---
+
+## Step 7: go to public
+
+make a website and tweet about it
+
+```r
+devtools::install_github("r-lib/pkgdown")
+```
+
+```r
+pkgdown::build_site()
+```
+
+---
+
+## Step 8: submit to CRAN
+
+```r
+devtools::submit_cran()
+```
+
+---
+
+class: inverse middle center
+
+### Made with <i class="fa  fa-heart "></i>
+
+--
+
+### Slides created via xaringan ⚔️ &lt;http://slides.earo.me/rladies-pkg&gt;
+
+--
+### Open source &lt;https://github.com/earowang/rladies-pkg&gt;
+
+--
+### This work is under licensed [<i class="fa  fa-creative-commons "></i> BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+
+--
+
+### Thank you!
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

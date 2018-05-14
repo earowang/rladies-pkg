@@ -1,8 +1,8 @@
 ---
-title: "Everything you need to know <br> to create your own R `r emo::ji('package')`"
+title: "Everything you need to know <br> to create your own `r icon::fa_r_project()` package"
 type: "workshop"
 author: "Earo Wang"
-date: "May 27, 2018 <br> slides at <http://slides.earo.me/rladies-pkg>"
+date: "May 24, 2018 <br> slides at <http://slides.earo.me/rladies-pkg>"
 output:
   xaringan::moon_reader:
     css: ["default", "rladies", "rladies-fonts"]
@@ -24,46 +24,93 @@ opts_chunk$set(
 )
 ```
 
-## Step 0: catchy package name
+class: center middle inverse
 
-`available::available()` to make sure that the package name is unique and valid. `r emo::ji("crossed_fingers")`
+--
 
-```{r}
-available::available("zomato", browse = FALSE)
+## In preparation for this workshop, 
+
+## I've developed my 7th `r icon::fa_r_project()` package.
+
+---
+
+## Why R package?
+
+---
+
+class: center middle inverse
+
+# Today's mission
+
+## `r icon::fa_square()` Create an `r icon::fa_r_project()` package to query the Zomato API
+
+---
+
+## Step 0: a catchy `r emo::ji("package")` name
+
+--
+
+`available::available()` makes sure that the package name is valid and available.
+
+--
+
+```r
+available::available("romato", browse = FALSE)
+```
+
+```
+#> ── romato ─────────────────────────────────────────────────────────────────
+#> Name valid: ✔
+#> Available on CRAN: ✔ 
+#> Available on Bioconductor: ✔
+#> Available on GitHub:  ✖ 
+#> Bad Words: ✔
+#> Abbreviations: http://www.abbreviations.com/romato
+#> Wikipedia: https://en.wikipedia.org/wiki/romato
+#> Wiktionary: https://en.wiktionary.org/wiki/romato
+#> Urban Dictionary:
+#>   Not found.
+#> Sentiment:???
 ```
 
 ---
 
-## Step 1: package skeleton
+## Step 1: `r emo::ji("package")` skeleton
 
-`usethis::create_package()` to initialise the basics of the package
+--
+
+`usethis::create_package()` initialises the basic components of a package.
+
+--
 
 ```r
-usethis::create_package("~/Rpkg/zomato")
+usethis::create_package("~/Rpkg/romato")
 ```
 
 ```
-#> Changing active project to zomato
+#> Changing active project to romato
 #> ✔ Creating 'R/'
 #> ✔ Creating 'man/'
 #> ✔ Writing 'DESCRIPTION'
 #> ✔ Writing 'NAMESPACE'
-#> ✔ Writing 'zomato.Rproj'
+#> ✔ Writing 'romato.Rproj'
 #> ✔ Adding '.Rproj.user' to './.gitignore'
-#> ✔ Adding '^zomato\\.Rproj$', '^\\.Rproj\\.user$' to '.Rbuildignore'
+#> ✔ Adding '^romato\\.Rproj$', '^\\.Rproj\\.user$' to '.Rbuildignore'
 #> ✔ Opening project in RStudio
 ```
 
 ---
 
-![](img/zomato.png)
+## Step 1: `r emo::ji("package")` skeleton
+
+![](img/romato-proj.png)
 
 ---
 
 ## Step 2: edit `DESCRIPTION`
 
 ```
-Package: zomato
+Package: romato
 Version: 0.0.0.9000
 Title: What the Package Does (One Line, Title Case)
 Description: What the package does (one paragraph).
@@ -76,19 +123,84 @@ ByteCompile: true
 
 ---
 
-## Step 3: write R functions
+## Step 3: choose a license
 
 ```r
-usethis::use_r(name = "api")
+usethis::use_mit_license("Earo Wang")
 ```
 
-```r
-● Modify 'api.R'
+```
+✔ Setting License field in DESCRIPTION to 'MIT + file LICENSE'
+✔ Writing 'LICENSE.md'
+✔ Adding '^LICENSE\\.md$' to '.Rbuildignore'
+✔ Writing 'LICENSE'
 ```
 
 ---
 
-## Step 4: use functions from other packages
+## Step 4: write functions
+
+```r
+usethis::use_r(name = "zomato-api")
+```
+
+```r
+● Modify 'zomato-api.R'
+```
+
+An API key is needed, which you can sign up [here](https://developers.zomato.com/api).
+
+We are going to write some Zomato API wrappers. Check out [the documentation](https://developers.zomato.com/documentation) for developers.
+
+---
+
+## Write functions in interactive session
+
+```r
+library(httr)
+library(jsonlite)
+zomato_search <- function(api_key = NULL, query) {
+  # URL to Zomato API
+  url <- modify_url(
+    url = "https://developers.zomato.com" , 
+    path = "/api/v2.1/search"
+  )
+  # request URL
+  resp <- GET(
+    url = url, 
+    config = add_headers("user-key" = api_key),
+    query = list(q = query)
+  )
+  # read the JSON file
+  parsed <- fromJSON(
+    content(
+      resp, as = "text", type = "application/json", encoding = "UTF-8"
+    ),
+    flatten = TRUE
+  )
+  # return results
+  parsed$restaurants
+}
+
+ur_key <- "your-api-key"
+zomato_search(ur_key, query = "Brother Budan Baba Melbourne")
+```
+
+---
+
+class: center middle inverse
+
+# Two hours later ...
+
+---
+
+class: middle
+
+Click [me](https://gist.github.com/earowang/e027a3f5ceac9f91ef8307415d02e0f5) to download the pre-prepared R scripts.
+
+---
+
+## Step 5: use `pkg::fun()` instead of `library()`
 
 ```r
 usethis::use_package("httr")
@@ -99,17 +211,105 @@ usethis::use_package("httr")
 #> ● Refer to functions with `httr::fun()`
 ```
 
+```r
+usethis::use_package("jsonlite")
+```
+
+```
+#> ✔ Adding 'jsonlite' to Imports field in DESCRIPTION
+#> ● Refer to functions with `jsonlite::fun()`
+```
+
+Any change in DESCRIPTION?
+
 ---
 
-## Step 5: document your functions
+## Step 6: if the function works or not
+
+Load all the functions into the environment: `command` + `shift` + `L`
+
+```r
+devtools::load_all(".")
+#> Loading romato
+```
+
+---
+
+## Step 7: document your functions
+
+```r
+usethis::use_roxygen_md()
+```
+
+```
+#> ✔ Setting Roxygen field in DESCRIPTION to 'list(markdown = TRUE)'
+#> ✔ Setting RoxygenNote field in DESCRIPTION to '6.0.1'
+#> ● Re-document
+```
+
+---
+
+## Step 7: document your functions
 
 * Shortcut `command` + `option` + `shift` + `R` to insert roxygen skeleton
 
 * Shortcut `command` + `shift` + `D` to generate man file (`*.Rd`)
 
+```
+==> devtools::document(roclets=c('rd', 'collate', 'namespace'))
+
+Updating romato documentation
+Loading romato
+Writing NAMESPACE
+Documentation completed
+```
+
 ---
 
-## Step 6: unit tests
+## Step 7: document your functions
+
+* Shortcut `command` + `shift` + `B` to build the package
+
+```
+==> R CMD INSTALL --no-multiarch --with-keep.source romato
+
+* installing to library ‘/Library/Frameworks/R.framework/Versions/3.5/Resources/library’
+* installing *source* package ‘romato’ ...
+** R
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (romato)
+```
+
+---
+
+## Step 8: installable
+
+* Shortcut `command` + `shift` + `E` to pass CRAN check
+
+```
+Status: OK
+
+
+
+R CMD check results
+0 errors | 0 warnings | 0 notes
+
+R CMD check succeeded
+```
+
+---
+
+class: center middle inverse
+
+# Good practise
+
+---
+
+## Unit tests
 
 ```r
 usethis::use_test("api")
@@ -125,13 +325,30 @@ usethis::use_test("api")
 
 ---
 
-## Step 6: unit tests
+## Unit tests
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Sometime I self-soothe by writing unit tests.<br>This is how the world should be and … it is.<br>This is how the world should be and … it is.<br>This is how … WTF!?! OK, fixed.<br>This is how the world should be and … it is.</p>&mdash; Jenny Bryan (@JennyBryan) <a href="https://twitter.com/JennyBryan/status/983096934209482752?ref_src=twsrc%5Etfw">April 8, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 ---
 
-## Step 7: go to public
+```r
+usethis::use_readme_rmd()
+```
+
+```
+✔ Writing 'README.Rmd'
+✔ Adding '^README\\.Rmd$' to '.Rbuildignore'
+● Modify 'README.Rmd'
+```
+
+
+---
+
+## Vignette
+
+---
+
+## Website
 
 make a website and tweet about it
 
@@ -145,10 +362,10 @@ pkgdown::build_site()
 
 ---
 
-## Step 8: submit to CRAN
+## Release
 
 ```r
-devtools::submit_cran()
+devtools::release()
 ```
 
 ---

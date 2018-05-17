@@ -24,9 +24,9 @@ opts_chunk$set(
 )
 ```
 
-## Agenda
+class: center middle inverse
 
-* 
+This page has been intentionally left blank.
 
 ---
 
@@ -169,13 +169,11 @@ ByteCompile: true
 
 ## Step 3: choose a license
 
-* MIT License `use_mit_license()`: people can do anything they want with your code as long as attributing to you.
+* MIT License `use_mit_license()`: free for anyone to do anything with.
 
-* Apache License 2.0 `use_apl2_license()`: similar to MIT, but also provides an express grant of patent rights from contributors to users.
+* GPLv3 `use_gpl3_license()`: changes and bundles must also be GPL.
 
-* GPLv3 `use_gpl3_license()`: people who distributes your code or a derivative work to make the source available under the same terms.
-
-* CC0 `use_cc0_license()`: dedicated to public domain. Appropriate for data packages.
+* CC0 `use_cc0_license()`: dedicated to public domain, best for data packages.
 
 --
 
@@ -190,7 +188,7 @@ usethis::use_mit_license("Earo Wang")
 ✔ Writing 'LICENSE'
 ```
 
-.footnote[reference: [choose a license](https://choosealicense.com)]
+.footnote[more on license: [choose a license](https://choosealicense.com)]
 
 ---
 
@@ -266,7 +264,7 @@ Click [me](https://gist.github.com/earowang/e027a3f5ceac9f91ef8307415d02e0f5) to
 
 ---
 
-## Step 5: use `pkg::fun()`
+## Step 5: use `r emo::ji("package")``::fun()`
 
 ```r
 usethis::use_package("httr")
@@ -288,9 +286,9 @@ usethis::use_package("jsonlite")
 
 ---
 
-## Step 6: explore in console `r icon::fa_arrows_alt_h()` modify code
+## Step 6: explore in console `r icon::fa_arrows_alt_h()` write R code
 
-In RStudio, `Cmd/Ctrl` + `Shift` + `L` loads all the functions into the environment.
+Imodifyn RStudio, `Cmd/Ctrl` + `Shift` + `L` loads all the functions into the environment.
 
 ```r
 devtools::load_all(".")
@@ -366,7 +364,7 @@ Documentation completed
 
 ## Step 8: install package
 
-* Shortcut `Cmd/Ctrl` + `Shift` + `B` to build the package
+* `Cmd/Ctrl` + `Shift` + `B` to build the package
 
 ```
 ==> R CMD INSTALL --no-multiarch --with-keep.source romato
@@ -384,9 +382,9 @@ Documentation completed
 
 ---
 
-## Step 9: pass CRAN check
+## Step 9: R CMD check
 
-* Shortcut `Cmd/Ctrl` + `Shift` + `E` to pass CRAN check
+* `Cmd/Ctrl` + `Shift` + `E` to perform R CMD check
 
 ```
 Status: OK
@@ -410,6 +408,10 @@ class: center middle inverse
 
 ## Unit tests
 
+Catch bugs before they happen, and guarantee the validity of the code.
+
+--
+
 ```r
 usethis::use_test("api")
 ```
@@ -422,11 +424,45 @@ usethis::use_test("api")
 #> ● Modify 'test-api.R'
 ```
 
+--
+
+For example in the `test-api.R`
+
+```r
+context("Zomato API")
+
+test_that("invalid input", {
+  expect_error(zomato_search(api_key = NULL), "Please provide an API key.")
+})
+```
+
+* `Cmd/Ctrl` + `Shift` + `T` to perform tests
+
 ---
 
 ## Unit tests
 
+<br>
+<br>
+<br>
+<br>
+
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Sometime I self-soothe by writing unit tests.<br>This is how the world should be and … it is.<br>This is how the world should be and … it is.<br>This is how … WTF!?! OK, fixed.<br>This is how the world should be and … it is.</p>&mdash; Jenny Bryan (@JennyBryan) <a href="https://twitter.com/JennyBryan/status/983096934209482752?ref_src=twsrc%5Etfw">April 8, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+---
+
+## Code coverage
+
+Code coverage is the % of code that is covered by unit tests.
+
+```r
+covr::package_coverage()
+```
+
+![tsibble-coverage](img/tsibble-coverage.png)
+
+`covr::report()` displays covr results in a standalone report.
+
 
 ---
 
@@ -442,16 +478,55 @@ usethis::use_readme_rmd()
 ● Modify 'README.Rmd'
 ```
 
+--
+
+A README file should include:
+
+* A brief overview of the package
+
+* instructions on how to install
+
+* A few examples
 
 ---
 
 ## Vignette
 
+```r
+usethis::use_vignette("intro-romato")
+```
+
+```
+#> ✔ Adding 'knitr' to Suggests field in DESCRIPTION
+#> ✔ Setting VignetteBuilder field in DESCRIPTION to 'knitr'
+#> ✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION
+#> ✔ Creating 'vignettes/'
+#> ✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'
+#> ✔ Adding 'inst/doc' to './.gitignore'
+#> ✔ Creating 'vignettes/intro-romato.Rmd'
+#> ● Modify 'intro-romato.Rmd'
+```
+
+--
+
+Rmarkdown + metadata
+
+```
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```
+
 ---
 
 ## Website
-
-make a website and tweet about it
 
 ```r
 pkgdown::build_site()

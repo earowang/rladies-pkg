@@ -22,17 +22,29 @@ class: center, middle, inverse, title-slide
 
 
 
-class: center middle inverse
+## Agenda
 
---
-
-## In preparation for this workshop, 
-
-## I've developed my 7th <i class="fab  fa-r-project "></i> package.
+* 
 
 ---
 
 ## Why R package?
+
+---
+
+## Tools to automate the package development
+
+* RStudio
+
+* `available`: Check if the Title of a Package is Available, Appropriate and Interesting
+
+* `usethis`: Automate Package and Project Setup
+
+* `devtools`: Tools to Make Developing R Packages Easier
+
+* `testthat`: Unit Testing for R
+
+* `pkgdown`: Make Static HTML Documentation for a Package
 
 ---
 
@@ -44,11 +56,29 @@ class: center middle inverse
 
 ---
 
-## Step 0: a catchy 📦 name
+## Step 0: come up with a catchy 📦 name
+
+* Unique &amp; googlable
+
+* Describes what the package does (for example, **knitr** is neater than Sweave)
+
+* Only contains letters, numbers, and dots
+
+* Begins with a letter, and not end with a period
 
 --
 
-`available::available()` makes sure that the package name is valid and available.
+### Good practices
+
+* Avoid capitalisation for less memorisation and less typing
+
+---
+
+## Step 0: come up with a catchy 📦 name
+
+--
+
+`available::available()` makes sure that the package name is valid and unique.
 
 --
 
@@ -73,7 +103,7 @@ available::available("romato", browse = FALSE)
 
 ---
 
-## Step 1: 📦 skeleton
+## Step 1: setup 📦
 
 --
 
@@ -97,9 +127,17 @@ usethis::create_package("~/Rpkg/romato")
 #&gt; ✔ Opening project in RStudio
 ```
 
+* `R/`: the R code
+
+* `man/`: the documentation
+
+* `DESCRIPTION`: the metadata of the package
+
+* `NAMESPACE`: how the package interacts with R and with other packages (do not edit by hand)
+
 ---
 
-## Step 1: 📦 skeleton
+## Step 1: setup 📦
 
 ![](img/romato-proj.png)
 
@@ -119,9 +157,25 @@ LazyData: true
 ByteCompile: true
 ```
 
+--
+
+### Version numbering convention
+
+* major.minor.patch.dev: `0.0.0.9000`
+
 ---
 
 ## Step 3: choose a license
+
+* MIT License `use_mit_license()`: people can do anything they want with your code as long as attributing to you.
+
+* Apache License 2.0 `use_apl2_license()`: similar to MIT, but also provides an express grant of patent rights from contributors to users.
+
+* GPLv3 `use_gpl3_license()`: people who distributes your code or a derivative work to make the source available under the same terms.
+
+* CC0 `use_cc0_license()`: dedicated to public domain. Appropriate for data packages.
+
+--
 
 ```r
 usethis::use_mit_license("Earo Wang")
@@ -134,9 +188,13 @@ usethis::use_mit_license("Earo Wang")
 ✔ Writing 'LICENSE'
 ```
 
+.footnote[reference: [choose a license](https://choosealicense.com)]
+
 ---
 
-## Step 4: write functions
+## Step 4: 📦-oriented functions
+
+We are going to write some Zomato API wrappers. 
 
 ```r
 usethis::use_r(name = "zomato-api")
@@ -146,13 +204,13 @@ usethis::use_r(name = "zomato-api")
 ● Modify 'zomato-api.R'
 ```
 
-An API key is needed, which you can sign up [here](https://developers.zomato.com/api).
+* An API key is needed, which you can sign up [here](https://developers.zomato.com/api).
 
-We are going to write some Zomato API wrappers. Check out [the documentation](https://developers.zomato.com/documentation) for developers.
+* Check out [the documentation](https://developers.zomato.com/documentation) for developers.
 
 ---
 
-## Write functions in interactive session
+## Non 📦-oriented functions in a script
 
 ```r
 library(httr)
@@ -186,9 +244,17 @@ zomato_search(ur_key, query = "Brother Budan Baba Melbourne")
 
 ---
 
-class: center middle inverse
+## Step 4: 📦-oriented functions
 
-# Two hours later ...
+In the `R/` folder of a package:
+
+* 🚫 `library()` or `require()`: dependencies are managed in the `NAMESPACE` file.
+
+* 🚫 `source()`
+
+* 🚫 `options()` or `par()`
+
+* 🚫 `setwd()`
 
 ---
 
@@ -198,7 +264,7 @@ Click [me](https://gist.github.com/earowang/e027a3f5ceac9f91ef8307415d02e0f5) to
 
 ---
 
-## Step 5: use `pkg::fun()` instead of `library()`
+## Step 5: use `pkg::fun()`
 
 ```r
 usethis::use_package("httr")
@@ -218,13 +284,11 @@ usethis::use_package("jsonlite")
 #&gt; ● Refer to functions with `jsonlite::fun()`
 ```
 
-Any change in DESCRIPTION?
-
 ---
 
-## Step 6: if the function works or not
+## Step 6: explore in console <i class="fas  fa-arrows-alt-h "></i> modify code
 
-Load all the functions into the environment: `command` + `shift` + `L`
+In RStudio, `Cmd/Ctrl` + `Shift` + `L` loads all the functions into the environment.
 
 ```r
 devtools::load_all(".")
@@ -233,7 +297,9 @@ devtools::load_all(".")
 
 ---
 
-## Step 7: document your functions
+## Step 7: document
+
+* Enable markdown support in roxygen
 
 ```r
 usethis::use_roxygen_md()
@@ -247,11 +313,41 @@ usethis::use_roxygen_md()
 
 ---
 
-## Step 7: document your functions
+## Step 7: document
 
-* Shortcut `command` + `option` + `shift` + `R` to insert roxygen skeleton
+* `Cmd/Ctrl` + `Opt/Alt` + `Shift` + `R` inserts roxygen skeleton
 
-* Shortcut `command` + `shift` + `D` to generate man file (`*.Rd`)
+```r
+#' Title
+#'
+#' @param api_key 
+#' @param query 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+zomato_search &lt;- function(api_key = NULL, query) {
+  ...
+}
+```
+
+--
+
+Each roxygen comment is preceded by `#'`.
+
+* `@param`: inputs of the function, followed by a description
+* `@return`: what the function returns
+* `@export`: make the function visible/accessible to users
+* `@exmaples`: examples of how to use the function
+
+To know the list of parameters: `browseVignettes("roxygen2")`.
+
+---
+
+## Step 7: document
+
+* `Cmd/Ctrl` + `Shift` + `D` to generate `/man` files (`*.Rd`)
 
 ```
 ==&gt; devtools::document(roclets=c('rd', 'collate', 'namespace'))
@@ -262,11 +358,13 @@ Writing NAMESPACE
 Documentation completed
 ```
 
+`?zomato_search` to preview the man page
+
 ---
 
-## Step 7: document your functions
+## Step 8: install package
 
-* Shortcut `command` + `shift` + `B` to build the package
+* Shortcut `Cmd/Ctrl` + `Shift` + `B` to build the package
 
 ```
 ==&gt; R CMD INSTALL --no-multiarch --with-keep.source romato
@@ -284,9 +382,9 @@ Documentation completed
 
 ---
 
-## Step 8: installable
+## Step 9: pass CRAN check
 
-* Shortcut `command` + `shift` + `E` to pass CRAN check
+* Shortcut `Cmd/Ctrl` + `Shift` + `E` to pass CRAN check
 
 ```
 Status: OK
@@ -303,7 +401,8 @@ R CMD check succeeded
 
 class: center middle inverse
 
-# Good practise
+# Good practices
+### - Build a package that sustains
 
 ---
 
@@ -329,6 +428,8 @@ usethis::use_test("api")
 
 ---
 
+## README
+
 ```r
 usethis::use_readme_rmd()
 ```
@@ -351,10 +452,6 @@ usethis::use_readme_rmd()
 make a website and tweet about it
 
 ```r
-devtools::install_github("r-lib/pkgdown")
-```
-
-```r
 pkgdown::build_site()
 ```
 
@@ -365,6 +462,13 @@ pkgdown::build_site()
 ```r
 devtools::release()
 ```
+
+---
+
+## Useful resources
+
+* ["Building a package that lasts" --- eRum 2018 workshop by Colin Fay](https://github.com/ColinFay/erum2018)
+* [Prepare for CRAN](https://github.com/ThinkR-open/prepare-for-cran)
 
 ---
 

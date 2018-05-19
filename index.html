@@ -28,7 +28,15 @@ This page has been intentionally left blank.
 
 ---
 
-## Why R package?
+## Why write a 📦?
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;blockquote class="twitter-tweet" data-lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;Seriously, it doesn’t have to be about sharing your code (although that is an added benefit!). It is about saving yourself time.&lt;/p&gt;&amp;mdash; Hilary Parker &lt;a href="https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/"&gt;April 29, 2014&lt;/a&gt;&lt;/blockquote&gt;
 
 ---
 
@@ -36,15 +44,17 @@ This page has been intentionally left blank.
 
 * RStudio
 
-* `available`: Check if the Title of a Package is Available, Appropriate and Interesting
+* [`available`](https://CRAN.R-project.org/package=available): Check if the Title of a Package is Available, Appropriate and Interesting
 
-* `usethis`: Automate Package and Project Setup
+* [`usethis`](http://usethis.r-lib.org): Automate Package and Project Setup
 
-* `devtools`: Tools to Make Developing R Packages Easier
+* [`devtools`](https://CRAN.R-project.org/package=devtools): Tools to Make Developing R Packages Easier
 
-* `testthat`: Unit Testing for R
+* [`testthat`](http://testthat.r-lib.org): Unit Testing for R
 
-* `pkgdown`: Make Static HTML Documentation for a Package
+* [`covr`](https://CRAN.R-project.org/package=covr): Test Coverage for Packages
+
+* [`pkgdown`](http://pkgdown.r-lib.org): Make Static HTML Documentation for a Package
 
 ---
 
@@ -186,7 +196,7 @@ usethis::use_mit_license("Earo Wang")
 ✔ Writing 'LICENSE'
 ```
 
-.footnote[more on license: [choose a license](https://choosealicense.com)]
+.footnote[more about license: [choose a license](https://choosealicense.com)]
 
 ---
 
@@ -256,6 +266,12 @@ In the `R/` folder of a package:
 
 ---
 
+class: middle center
+
+&lt;iframe src="https://giphy.com/embed/xonOzxf2M8hNu" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/xonOzxf2M8hNu"&gt;&lt;/a&gt;&lt;/p&gt;
+
+---
+
 class: middle
 
 Click [me](https://gist.github.com/earowang/e027a3f5ceac9f91ef8307415d02e0f5) to download the pre-prepared R scripts.
@@ -286,7 +302,7 @@ usethis::use_package("jsonlite")
 
 ## Step 6: explore in console <i class="fas  fa-arrows-alt-h "></i> write R code
 
-Imodifyn RStudio, `Cmd/Ctrl` + `Shift` + `L` loads all the functions into the environment.
+In RStudio, `Cmd/Ctrl` + `Shift` + `L` loads all the functions into the environment.
 
 ```r
 devtools::load_all(".")
@@ -513,7 +529,7 @@ Rmarkdown + metadata
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2018-05-17"
+date: "2018-05-19"
 output: rmarkdown::html_vignette
 vignette: &gt;
   %\VignetteIndexEntry{Vignette Title}
@@ -526,28 +542,54 @@ vignette: &gt;
 
 ## Website
 
+Build a website for your 📦 in 2 minutes.
+
+--
+
 ```r
 pkgdown::build_site()
 ```
+
+![pkgdown](img/pkgdown.png)
 
 ---
 
 ## Release
 
+Submit the 📦 to CRAN.
+
 ```r
-devtools::release()
+devtools::release(spelling = "en_GB")
 ```
 
 ---
 
-## Useful resources
+## References
 
-* ["Building a package that lasts" --- eRum 2018 workshop by Colin Fay](https://github.com/ColinFay/erum2018)
-* [Prepare for CRAN](https://github.com/ThinkR-open/prepare-for-cran)
+* [R packages](http://r-pkgs.had.co.nz) <i class="fas  fa-book "></i> by Hadley Wickham
+
+* [Building a package that lasts](https://github.com/ColinFay/erum2018) <i class="fab  fa-github "></i> by Colin Fay at eRum 2018 workshop
+
+* [Women's coding workshop](http://bit.ly/forwards-nz) <i class="fab  fa-dropbox "></i> by Hadley Wickham, Jenny Brian, Di Cook
+
+--
+
+## Resources
+
+* [You can make a package in 20 minutes](https://www.rstudio.com/resources/videos/you-can-make-a-package-in-20-minutes/) <i class="fas  fa-video "></i> by Jim Hester
+
+* [Prepare for CRAN](https://github.com/ThinkR-open/prepare-for-cran) <i class="fab  fa-github "></i>
 
 ---
 
 class: inverse middle center
+
+&lt;img src="img/rladies.png" height=100px&gt;
+&lt;img src="img/forwards.png" height=100px&gt;
+
+--
+
+&lt;hr&gt;
 
 ### Made with <i class="fas  fa-heart "></i>
 
@@ -556,9 +598,11 @@ class: inverse middle center
 ### Slides created via xaringan ⚔️ &lt;http://slides.earo.me/rladies-pkg&gt;
 
 --
+
 ### Open source &lt;https://github.com/earowang/rladies-pkg&gt;
 
 --
+
 ### This work is under licensed [<i class="fab  fa-creative-commons "></i> BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
 --

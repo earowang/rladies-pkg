@@ -30,6 +30,8 @@ This page has been intentionally left blank.
 
 ## Why write a 📦?
 
+--
+
 &lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
@@ -40,7 +42,7 @@ This page has been intentionally left blank.
 
 ---
 
-## Tools to automate the package development
+## Tools to automate the 📦 development
 
 * RStudio
 
@@ -274,7 +276,7 @@ class: middle center
 
 class: middle
 
-Click [me](https://gist.github.com/earowang/e027a3f5ceac9f91ef8307415d02e0f5) to download the pre-prepared R scripts.
+Click [me](https://gist.github.com/earowang/e027a3f5ceac9f91ef8307415d02e0f5) to download the R scripts for this workshop.
 
 ---
 
@@ -298,9 +300,27 @@ usethis::use_package("jsonlite")
 #&gt; ● Refer to functions with `jsonlite::fun()`
 ```
 
+--
+
+.pull-left[
+### one way
+```
+httr::fun
+%&gt;% &lt;- magrittr::`%&gt;%`
+```
+]
+.pull-right[
+### alternative
+```
+#' @importFrom httr fun
+#' @import httr
+#' @importFrom magrittr %&gt;%
+```
+]
+
 ---
 
-## Step 6: explore in console <i class="fas  fa-arrows-alt-h "></i> write R code
+## Step 6: explore in console <i class="fas  fa-arrows-alt-h "></i> write <i class="fab  fa-r-project "></i> code
 
 In RStudio, `Cmd/Ctrl` + `Shift` + `L` loads all the functions into the environment.
 
@@ -376,7 +396,7 @@ Documentation completed
 
 ---
 
-## Step 8: install package
+## Step 8: install 📦
 
 * `Cmd/Ctrl` + `Shift` + `B` to build the package
 
@@ -416,7 +436,7 @@ R CMD check succeeded
 class: center middle inverse
 
 # Good practices
-### - Build a package that sustains
+### - Build a 📦 that sustains
 
 ---
 
@@ -529,7 +549,7 @@ Rmarkdown + metadata
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2018-05-19"
+date: "2018-05-20"
 output: rmarkdown::html_vignette
 vignette: &gt;
   %\VignetteIndexEntry{Vignette Title}
@@ -550,17 +570,60 @@ Build a website for your 📦 in 2 minutes.
 pkgdown::build_site()
 ```
 
-![pkgdown](img/pkgdown.png)
+[![pkgdown](img/pkgdown.png)](http://pkgdown.r-lib.org)
 
 ---
 
 ## Release
 
-Submit the 📦 to CRAN.
+* Creates `cran-comments.md`, a template for your communications with CRAN when submitting a package. 
+
+```r
+usethis::use_cran_comments()
+```
+
+```
+#&gt; ✔ Writing 'cran-comments.md'
+#&gt; ✔ Adding '^cran-comments\\.md$' to '.Rbuildignore'
+#&gt; ● Modify 'cran-comments.md'
+```
+
+* Submit the 📦 to CRAN. ~~[CRAN online submission form](https://cran.r-project.org/submit.html)~~
 
 ```r
 devtools::release(spelling = "en_GB")
 ```
+
+---
+
+class: center middle inverse
+
+# More
+
+--
+
+Version control (Git &amp; Github)
+
+--
+
+Continuous integration
+
+--
+
+Track changes in NEWS
+
+--
+
+S3, S4, R6, Reference class
+
+--
+
+...
+
+--
+
+# Keep calm
+# and write unit tests!
 
 ---
 
@@ -578,7 +641,11 @@ devtools::release(spelling = "en_GB")
 
 * [You can make a package in 20 minutes](https://www.rstudio.com/resources/videos/you-can-make-a-package-in-20-minutes/) <i class="fas  fa-video "></i> by Jim Hester
 
+* [`usethis` README](http://usethis.r-lib.org) <i class="fas  fa-file "></i>
+
 * [Prepare for CRAN](https://github.com/ThinkR-open/prepare-for-cran) <i class="fab  fa-github "></i>
+
+* [Tidyverse style guide](http://style.tidyverse.org) <i class="fas  fa-book "></i>
 
 ---
 

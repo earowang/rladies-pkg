@@ -72,7 +72,7 @@ class: center middle inverse
 
 ## Step 0: come up with a catchy `r emo::ji("package")` name
 
-* Unique & googlable
+* Unique & googleable
 
 * Describes what the package does (for example, **knitr** is neater than Sweave)
 
@@ -308,7 +308,7 @@ usethis::use_package("jsonlite")
 ### one way
 ```
 httr::fun
-%>% <- magrittr::`%>%`
+`%>%` <- magrittr::`%>%`
 ```
 ]
 .pull-right[
@@ -375,7 +375,7 @@ Each roxygen comment is preceded by `#'`.
 * `@param`: inputs of the function, followed by a description
 * `@return`: what the function returns
 * `@export`: make the function visible/accessible to users
-* `@exmaples`: examples of how to use the function
+* `@examples`: examples of how to use the function
 
 To know the list of parameters: `browseVignettes("roxygen2")`.
 
@@ -438,7 +438,7 @@ R CMD check succeeded
 class: center middle inverse
 
 # Good practices
-### - Build a `r emo::ji("package")` that sustains
+### Build a `r emo::ji("package")` that sustains
 
 ---
 

@@ -209,7 +209,7 @@ usethis::use_mit_license("Earo Wang")
 We are going to write some Zomato API wrappers. 
 
 ```r
-usethis::use_r(name = "zomato-api")
+usethis::use_r("zomato-api")
 ```
 
 ```r

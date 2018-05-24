@@ -437,6 +437,13 @@ R CMD check succeeded
 
 class: center middle inverse
 
+## `r emo::ji("tada")`
+## `r icon::fa_check_square()` Create an `r icon::fa_r_project()` package to query the Zomato API
+
+---
+
+class: center middle inverse
+
 # Good practices
 ### Build a `r emo::ji("package")` that sustains
 
